@@ -1,0 +1,17 @@
+FROM docker.io/library/alpine:latest AS alpine
+
+FROM scratch
+
+COPY --from=alpine /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+
+LABEL org.opencontainers.image.licenses=BSD-3-Clause
+LABEL org.opencontainers.image.description="Prometheus pushgateway client tool"
+
+WORKDIR /
+
+COPY LICENSE README.md /
+COPY prompush /
+
+ENTRYPOINT ["/prompush"]
+
+# vim: set ft=dockerfile :
